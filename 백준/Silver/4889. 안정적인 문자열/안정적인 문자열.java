@@ -1,78 +1,33 @@
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.StringTokenizer;
-import java.util.stream.Stream;
+import java.util.*;
+import java.lang.*;
+import java.io.*;
 
-
-/*
-백준 안정적인문자열 4889 S1
-시작 시간 : 24-01-29 08:20
-종료 시간 : 24-01-29
-실행시간 : ms
-
-
-고려사항
-
-*/
-
-public class Main {
-
-	static String line;
-	static char[] data = {'{','}','{','}','{','}'};
-	public static void main(String[] args) throws IOException {
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int testCaseNum = 1;
-		line = br.readLine();
-		while(line.toCharArray()[0] != '-') {
-			data = line.toCharArray();
-			
-			boolean mustAllClose = false;
-			int openNum = 0;
-			int ans = 0;
-			int n = data.length;
-			
-			for(int i = 0; i < n; i++) {
-				if(mustAllClose) {
-					if(data[i] == '{') {
-						ans++;
-					}
-					continue;
-				}
-				
-				if(openNum == 0 && data[i] == '}') {
-					ans++;
-					openNum++;
-					continue;
-				}
-				
-				if(n-i == openNum) {
-					if(data[i] == '{') {
-						ans++;
-					}
-					mustAllClose = true;
-					continue;
-				}
-				
-				if(data[i] == '}'){
-					openNum--;
-				}else if(data[i] == '{') {
-					openNum++;
-				}
-			}
-			
-			
-			System.out.println(testCaseNum + ". " + ans);
-			testCaseNum++;
-			line = br.readLine();
-		}
-		
-		
-	}
+// The main method must be in a class named "Main".
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int i=1;
+        while(true){
+            int res=0;
+            List<Character> stack = new ArrayList<Character>();
+            String s = sc.next();
+            if(s.charAt(0)=='-'){
+                break;
+            }
+            for(int j=0,size=s.length();j<size;j++){
+                if(s.charAt(j)=='{'){
+                    stack.add('{');
+                }else{
+                    if(stack.size()>0){
+                        stack.remove(stack.size()-1);
+                    }else{
+                        res+=1;
+                        stack.add('}');
+                    }
+                }
+            }
+            System.out.printf("%d. %d%n",i,res+(stack.size()/2));
+            i++;
+        }
+    }
 }
