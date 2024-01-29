@@ -1,106 +1,71 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 
 public class Main {
-	static String[][] arr = new String[19][19];
-	static boolean[][] rcheck = new boolean[19][19];
-	static boolean[][] drcheck = new boolean[19][19];
-	static boolean[][] dcheck = new boolean[19][19];
-	static boolean[][] dlcheck = new boolean[19][19];
 	
-	static void rcheck(int x, int y) {
-		int cnt=1;
-		rcheck[x][y]=true;
-		while((y+cnt<19)&&(arr[x][y+cnt].equals(arr[x][y]))) {
-			rcheck[x][y+cnt]=true;
-			cnt+=1;
-		}
-		
-		if(cnt==5) {
-			System.out.println(arr[x][y]);
-			System.out.println((x+1)+" "+(y+1));
-			System.exit(0);
-		}
-	}
+	static BufferedReader br;
+	static StringTokenizer st;
+	static int[][] data = new int[21][21];
+	static final int STARTIDX = 1, ENDIDX = 19;
 	
-	static void drcheck(int x, int y) {
-		int cnt=1;
-		drcheck[x][y]=true;
-		while((x+cnt<19)&&(y+cnt<19)&&(arr[x+cnt][y+cnt].equals(arr[x][y]))) {
-			drcheck[x+cnt][y+cnt]=true;
-			cnt+=1;
-		}
+	public static void main(String[] args) throws Exception {
+		//여기에 코드를 작성하세요.
 		
-		if(cnt==5) {
-			System.out.println(arr[x][y]);
-			System.out.println((x+1)+" "+(y+1));
-			System.exit(0);
-		}
-	}
-	
-	static void dcheck(int x, int y) {
-		int cnt=1;
-		dcheck[x][y]=true;
-		while((x+cnt<19)&&(arr[x+cnt][y].equals(arr[x][y]))) {
-			dcheck[x+cnt][y]=true;
-			cnt+=1;
-		}
+		br = new BufferedReader(new InputStreamReader(System.in));	
 		
-		if(cnt==5) {
-			System.out.println(arr[x][y]);
-			System.out.println((x+1)+" "+(y+1));
-			System.exit(0);
-		}
-	}
-	
-	static void dlcheck(int x, int y) {
-		int cnt=1;
-		dlcheck[x][y]=true;
-		while((x+cnt<19)&&(y-cnt>=0)&&(arr[x+cnt][y-cnt].equals(arr[x][y]))) {
-			dlcheck[x+cnt][y-cnt]=true;
-			cnt+=1;
-		}
-		
-		if(cnt==5) {
-			System.out.println(arr[x][y]);
-			System.out.println((x+cnt)+" "+(y-cnt+2));
-			System.exit(0);
-		}
-	}
-	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		for(int i=0;i<19;i++) {
-			String[] s = br.readLine().split(" ");
-			for(int j=0;j<19;j++) {
-				arr[i][j]=s[j];
+		for(int i = STARTIDX; i <= ENDIDX; i++) {
+			st = new StringTokenizer(br.readLine());
+			for(int j = STARTIDX; j <= ENDIDX; j++) {
+				data[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
 		
-		for(int i=0;i<19;i++) {
-			for(int j=0;j<19;j++) {
-				if(!(arr[i][j].equals("0"))) {
-					if(!rcheck[i][j]) {
-						rcheck(i,j);
-					}
-					if(!drcheck[i][j]) {
-						drcheck(i,j);
-					}
-					if(!dcheck[i][j]) {
-						dcheck(i,j);
-					}
-					if(!dlcheck[i][j]) {
-						dlcheck(i,j);
-					}
+		for(int i = STARTIDX; i <= ENDIDX; i++) {
+			for(int j = STARTIDX; j <= ENDIDX; j++) {
+		
+				// 가로
+				if(j >= STARTIDX + 2 && j <= ENDIDX - 2) if(checkWin(i, j, 0, 1)) return;
+				
+				// 세로
+				if(i >= STARTIDX + 2 && i <= ENDIDX - 2) if(checkWin(i, j, 1, 0)) return;
+				
+				
+				if(i >= STARTIDX + 2 && i <= ENDIDX - 2 && j >= STARTIDX + 2 && j <= ENDIDX - 2) {					
+					// 좌상우하
+					if(checkWin(i, j, 1, 1)) return;
 					
+					// 좌하우상
+					if(checkWin(i, j, -1, 1)) return;
 				}
-					
 			}
 		}
 		
-		System.out.println(0);
-		
+		System.out.print(0);
+	
 	}
 
+	private static boolean checkWin(int centerI, int centerJ, int di, int dj) {
+		
+		int center = data[centerI][centerJ];
+		
+		if(center == 0) return false;
+		
+		for(int i = -2; i <= 2; i++) {
+			if(center != data[centerI + di*i][centerJ + dj*i]) return false;
+		}
+		
+		if(center != data[centerI + (-3)*di][centerJ + (-3)*dj] && center != data[centerI + (3)*di][centerJ + (3)*dj]) {
+			System.out.println(data[centerI][centerJ]);
+			int ansI = centerI + (-2) * di;
+			int ansJ = centerJ + (-2) * dj;
+			System.out.print(ansI + " " + ansJ);
+			return true;
+		}
+		
+		return false;
+		
+	}
 }
