@@ -11,7 +11,7 @@ public class Main {
 	static int[] visited;
 	
 	static void dfs(int depth, int idx, int sum) {
-		if(sum>res) {
+		if(sum>=res) {
 			return;
 		}
 		
