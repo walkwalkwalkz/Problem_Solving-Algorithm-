@@ -2,56 +2,67 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /*
-백준 Z 1074 **
-시작 시간 : 24-01-22 20:20
-중지 :
-종료 시간 : 24-01-22 -----
-실행시간 : --ms
-
-고려사항
-
- */
+실행시간 : 1ms
+메모리 : 
+*/
 
 public class Main {
 
-    static int N, r, c;
-    static int result;
-    public static void main(String[] args) throws IOException {
+	static long N, R, C;
+	
+	public static void main(String[] args) throws IOException {
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		N = Integer.parseInt(st.nextToken());
+		R = Integer.parseInt(st.nextToken());
+		C = Integer.parseInt(st.nextToken());
+		System.out.println(foo((int)Math.pow(2, N) , 0));
+		
+	}
 
-        //System.setIn(new FileInputStream("input.txt"));
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	private static long foo(long size, long cnt) {
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        r = Integer.parseInt(st.nextToken());
-        c = Integer.parseInt(st.nextToken());
-
-        foo(r, c, N);
-        System.out.println(result);
-    }
-
-    private static void foo(int r, int c, int n) {
-
-        int sector = 0;
-        if(n == 1){
-            if(c==1) sector += 1;
-            if(r==1) sector += 2;
-            result += sector;
-            return;
-        }
-
-        int midIdx = (int)Math.pow(2, n-1);
-        if(c >= midIdx) sector += 1;
-        if(r >= midIdx) sector += 2;
-
-        result += sector * (int)Math.pow(Math.pow(2, n-1), 2);
-
-        if(r >= midIdx) r -= midIdx;
-        if(c >= midIdx) c -= midIdx;
-
-        foo(r, c, n-1);
-    }
+		if(size == 2) { 
+			int val = 0;
+			if(R == 0 && C == 0) val = 0;
+			if(R == 0 && C == 1) val = 1;
+			if(R == 1 && C == 0) val = 2;
+			if(R == 1 && C == 1) val = 3;
+			
+			return cnt + val;
+		}
+		
+		long half = size / 2;
+		// 좌상
+		if(R < half && C < half) {
+			return foo(half, cnt);
+		}
+		
+		// 우상
+		else if(R < half && C >= half) {
+			C -= half;
+			return foo(half, cnt + half*half);
+		}
+		
+		// 좌하
+		else if(R >= half && C < half) {
+			R -= half;
+			return foo(half, cnt + 2*half*half);
+		}
+		
+		// 우하
+		else {
+			R -= half;
+			C -= half;
+			return foo(half, cnt + 3*half*half);
+		}
+		
+		
+	}		
+	
 }
