@@ -6,6 +6,7 @@ public class Main {
 	
 	static int N;
 	static char[][] arr;
+	static StringBuilder sb = new StringBuilder();
 	
 	static void quadTree(int x, int y, int size) {
 		char tmp = arr[x][y];
@@ -21,18 +22,18 @@ public class Main {
 			}
 		}
 		if(b==0) {
-			System.out.print(tmp);
+			sb.append(tmp);
 			return;
 		}
 		
 		size=size/2;
 		
-		System.out.print("(");
+		sb.append("(");
 		quadTree(x,y,size);
 		quadTree(x,y+size,size);
 		quadTree(x+size,y,size);
 		quadTree(x+size,y+size,size);
-		System.out.print(")");
+		sb.append(")");
 	}
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -48,6 +49,7 @@ public class Main {
 		}
 		
 		quadTree(0,0,N);
+		System.out.println(sb);
 	}
 
 }
