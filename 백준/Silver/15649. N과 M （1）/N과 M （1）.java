@@ -4,13 +4,14 @@ import java.util.Scanner;
 public class Main {
 	static int N,M;
 	static int[] data;
+	static StringBuilder sb = new StringBuilder();
 	
 	static void per(int depth, int flag) {
 		if(depth==M) {
 			for(int d : data) {
-				System.out.print(d+" ");
+				sb.append(d+" ");
 			}
-			System.out.println();
+			sb.append("\n");
 			return;
 		}
 		
@@ -28,6 +29,7 @@ public class Main {
 		
 		data = new int[M];
 		per(0,0);
+		System.out.println(sb);
 	}
 
 }
