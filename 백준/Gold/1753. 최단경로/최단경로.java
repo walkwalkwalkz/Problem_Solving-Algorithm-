@@ -54,10 +54,12 @@ public class Main {
 			}
 		}
 		
+		StringBuilder sb = new StringBuilder();
 		for(int i=1;i<V+1;i++) {
-			if(res[i]==200001) System.out.println("INF");
-			else System.out.println(res[i]);
+			if(res[i]==200001) sb.append("INF\n");
+			else sb.append(res[i]+"\n");
 		}
+		System.out.println(sb);
 		
 	}
 
