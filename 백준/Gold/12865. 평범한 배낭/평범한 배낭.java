@@ -22,11 +22,7 @@ public class Main {
 			}
 		}
 		
-		int res=0;
-		for(int i=1;i<K+1;i++) {
-			res = Math.max(res, dp[i]);
-		}
-		System.out.println(res);
+		System.out.println(dp[K]);
 	}
 
 }
