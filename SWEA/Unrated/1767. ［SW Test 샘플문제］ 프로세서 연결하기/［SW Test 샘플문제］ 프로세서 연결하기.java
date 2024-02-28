@@ -16,14 +16,9 @@ public class Solution {
 	static int cntCore,cntLine;
 	
 	static void dfs(int depth, int core, int line) {
+		if(cntCore>core+cells.size()-depth) return;
+		
 		if(depth==cells.size()) {
-			
-//			System.out.println();
-//			for(int i=0;i<N;i++) {
-//				System.out.println(Arrays.toString(arr[i]));
-//			}
-//			System.out.println();
-			
 			if(core>cntCore) {
 				cntCore=core;
 				cntLine=line;
