@@ -15,12 +15,16 @@ for _ in range(int(input())):
     
     dis=[0]*(n+1)
     hq=[]
+    cnt=0
+    maxVal=0
     heapq.heappush(hq,(1,c))
     while hq:
         t,x = heapq.heappop(hq)
 
         if dis[x]==0:
             dis[x]=t
+            cnt+=1
+            maxVal=t
         else:
             continue
         
@@ -32,11 +36,11 @@ for _ in range(int(input())):
         #     if arr[x][i]!=0 and dis[i]==0:
         #         heapq.heappush(hq,(t+arr[x][i],i))
     
-    cnt=0
-    maxVal=0
-    for d in dis:
-        if d!=0:
-            cnt+=1
-            if d>maxVal:
-                maxVal=d
+    # cnt=0
+    # maxVal=0
+    # for d in dis:
+    #     if d!=0:
+    #         cnt+=1
+    #         if d>maxVal:
+    #             maxVal=d
     print(cnt,maxVal-1)
