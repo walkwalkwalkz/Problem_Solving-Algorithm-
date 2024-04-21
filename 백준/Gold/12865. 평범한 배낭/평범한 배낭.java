@@ -9,20 +9,20 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		int N = Integer.parseInt(st.nextToken());
-		int K = Integer.parseInt(st.nextToken());
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
 		
-		int[] dp = new int[K+1];
-		for(int i=0;i<N;i++) {
+		int[] dp = new int[m+1];
+		for(int i=0;i<n;i++) {
 			st = new StringTokenizer(br.readLine());
 			int w = Integer.parseInt(st.nextToken());
 			int v = Integer.parseInt(st.nextToken());
-			for(int j=K;j>=w;j--) {
-				dp[j]=Math.max(dp[j], dp[j-w]+v);
+			for(int j=m;j>=w;j--) {
+				dp[j] = Math.max(dp[j], dp[j-w]+v);
 			}
 		}
 		
-		System.out.println(dp[K]);
+		System.out.println(dp[m]);
 	}
 
 }
